@@ -38,9 +38,9 @@ class Products with ChangeNotifier {
   var _showFavourites = false;
 
   List<Product> get items {
-    if (_showFavourites) {
-      return [...items.where((prod) => prod.isFavourite)];
-    }
+    // if (_showFavourites) {
+    // return [...items.where((prod) => prod.isFavourite)];
+    // }
     return [..._items];
   }
 
@@ -52,6 +52,10 @@ class Products with ChangeNotifier {
   void showAll() {
     _showFavourites = false;
     notifyListeners();
+  }
+
+  List<Product> get favouriteItems {
+    return [...items.where((prod) => prod.isFavourite)];
   }
 
   Product findById(String productId) {
