@@ -4,79 +4,44 @@ import 'package:shop_app/models/product.dart';
 class Products with ChangeNotifier {
   List<Product> _items = [
     Product(
-      id: '1',
-      title: 'p1',
-      description: 'this is the description for product 1',
-      price: 19.99,
-      imgUrl: "https://unsplash.it/500",
-    ),
-    Product(
-      id: '2',
-      title: 'p2',
-      description: 'this is the description for product 2',
+      id: 'p1',
+      title: 'Red Shirt',
+      description: 'A red shirt - it is pretty red!',
       price: 29.99,
-      imgUrl: "https://unsplash.it/501",
+      imgUrl:
+          'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
     ),
     Product(
-      id: '3',
-      title: 'p3',
-      description: 'this is the description for product 3',
-      price: 39.99,
-      imgUrl: "https://unsplash.it/502",
-    ),
-    Product(
-      id: '4',
-      title: 'p4',
-      description: 'this is the description for product 4',
-      price: 49.99,
-      imgUrl: "https://unsplash.it/503",
-    ),
-    Product(
-      id: '5',
-      title: 'p5',
-      description: 'this is the description for product 5',
+      id: 'p2',
+      title: 'Trousers',
+      description: 'A nice pair of trousers.',
       price: 59.99,
-      imgUrl: "https://unsplash.it/504",
+      imgUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Trousers%2C_dress_%28AM_1960.022-8%29.jpg/512px-Trousers%2C_dress_%28AM_1960.022-8%29.jpg',
     ),
     Product(
-      id: '6',
-      title: 'p6',
-      description: 'this is the description for product 6',
-      price: 69.99,
-      imgUrl: "https://unsplash.it/505",
+      id: 'p3',
+      title: 'Yellow Scarf',
+      description: 'Warm and cozy - exactly what you need for the winter.',
+      price: 19.99,
+      imgUrl: 'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
     ),
     Product(
-      id: '7',
-      title: 'p7',
-      description: 'this is the description for product 7',
-      price: 79.99,
-      imgUrl: "https://unsplash.it/506",
-    ),
-    Product(
-      id: '8',
-      title: 'p8',
-      description: 'this is the description for product 8',
-      price: 79.99,
-      imgUrl: "https://unsplash.it/508",
-    ),
-    Product(
-      id: '9',
-      title: 'p9',
-      description: 'this is the description for product 9',
-      price: 79.99,
-      imgUrl: "https://unsplash.it/509",
-    ),
-    Product(
-      id: '10',
-      title: 'p10',
-      description: 'this is the description for product 10',
-      price: 109.99,
-      imgUrl: "https://unsplash.it/510",
+      id: 'p4',
+      title: 'A Pan',
+      description: 'Prepare any meal you want.',
+      price: 49.99,
+      imgUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ];
 
   List<Product> get items {
     return [..._items];
+  }
+
+  Product findById(String productId) {
+    return _items.firstWhere((product) => product.id == productId);
   }
 
   void addProduct() {
