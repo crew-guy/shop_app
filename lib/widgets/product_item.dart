@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/providers/product.dart';
 import 'package:shop_app/screens/product_details_screen.dart';
+import "package:provider/provider.dart";
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String imgUrl;
-  final String title;
+  // final String id;
+  // final String imgUrl;
+  // final String title;
 
-  ProductItem(this.id, this.imgUrl, this.title);
+  ProductItem(
+      // this.id,
+      // this.imgUrl,
+      // this.title,
+      );
 
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
     return Container(
       decoration: new BoxDecoration(
         boxShadow: [
@@ -29,9 +36,10 @@ class ProductItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: GridTile(
           child: GestureDetector(
-              onTap: () => Navigator.of(context)
-                  .pushNamed(ProductDetailsScreen.routeName, arguments: id),
-              child: Image.network(imgUrl, fit: BoxFit.cover)),
+              onTap: () => Navigator.of(context).pushNamed(
+                  ProductDetailsScreen.routeName,
+                  arguments: product.id),
+              child: Image.network(product.imgUrl, fit: BoxFit.cover)),
           footer: GridTileBar(
             backgroundColor: Colors.black54,
             leading: IconButton(
@@ -44,7 +52,7 @@ class ProductItem extends StatelessWidget {
                 onPressed: () {},
                 color: Theme.of(context).accentColor),
             title: Text(
-              title,
+              product.title,
               textAlign: TextAlign.center,
             ),
           ),

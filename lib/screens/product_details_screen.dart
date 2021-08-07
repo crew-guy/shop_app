@@ -9,7 +9,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final String productId =
         ModalRoute.of(context)?.settings.arguments as String;
-    final productsData = Provider.of<Products>(context);
+    final productsData = Provider.of<Products>(context, listen: false);
     final loadedProduct = productsData.findById(productId);
     return Scaffold(
       appBar: AppBar(

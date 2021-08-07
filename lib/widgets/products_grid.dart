@@ -17,10 +17,13 @@ class ProductsGrid extends StatelessWidget {
       ),
       itemBuilder: (ctx, i) {
         var currentLoadedProduct = products[i];
-        return ProductItem(
-          currentLoadedProduct.id,
-          currentLoadedProduct.imgUrl,
-          currentLoadedProduct.title,
+        return ChangeNotifierProvider(
+          create: (ctx) => currentLoadedProduct,
+          child: ProductItem(
+              // currentLoadedProduct.id,
+              // currentLoadedProduct.imgUrl,
+              // currentLoadedProduct.title,
+              ),
         );
       },
       itemCount: products.length,
