@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/providers/product.dart';
 import 'package:shop_app/screens/product_details_screen.dart';
@@ -39,7 +41,11 @@ class ProductItem extends StatelessWidget {
             onTap: () => Navigator.of(context).pushNamed(
                 ProductDetailsScreen.routeName,
                 arguments: product.id),
-            child: Image.network(product.imgUrl, fit: BoxFit.cover),
+            // child: Image.network(product.imgUrl, fit: BoxFit.cover),
+            child: Container(
+              color:
+                  Colors.primaries[Random().nextInt(Colors.primaries.length)],
+            ),
           ),
           footer: GridTileBar(
             backgroundColor: Colors.black54,
