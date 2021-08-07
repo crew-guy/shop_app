@@ -55,6 +55,27 @@ class ProductsOverviewScreen extends StatelessWidget {
       price: 79.99,
       imgUrl: "https://unsplash.it/506",
     ),
+    Product(
+      id: '8',
+      title: 'p8',
+      description: 'this is the description for product 8',
+      price: 79.99,
+      imgUrl: "https://unsplash.it/508",
+    ),
+    Product(
+      id: '9',
+      title: 'p9',
+      description: 'this is the description for product 9',
+      price: 79.99,
+      imgUrl: "https://unsplash.it/509",
+    ),
+    Product(
+      id: '10',
+      title: 'p10',
+      description: 'this is the description for product 10',
+      price: 109.99,
+      imgUrl: "https://unsplash.it/510",
+    ),
   ];
   @override
   Widget build(BuildContext context) {
