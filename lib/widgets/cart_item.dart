@@ -18,10 +18,21 @@ class CartItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(15),
       child: ListTile(
-          leading: CircleAvatar(child: Text('\$${price}')),
-          title: Text(title),
-          subtitle: Text('x${quantity}'),
-          trailing: IconButton(icon: Icon(Icons.delete), onPressed: () {})),
+        leading: CircleAvatar(
+          child: FittedBox(
+            child: Text('\$${price}'),
+          ),
+        ),
+        title: Text(title),
+        subtitle: Text('Total : ${quantity * price}'),
+        trailing: Text(
+          'x${quantity}',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+      ),
     );
   }
 }
