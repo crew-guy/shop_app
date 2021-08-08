@@ -63,15 +63,16 @@ class ProductItem extends StatelessWidget {
               ),
             ),
             trailing: IconButton(
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  cart.addItem(
-                    product.id,
-                    product.price,
-                    product.title,
-                  );
-                },
-                color: Theme.of(context).accentColor),
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
+                cart.addItem(
+                  product.id,
+                  product.price,
+                  product.title,
+                );
+              },
+              color: Theme.of(context).accentColor,
+            ),
             title: Text(
               product.title,
               textAlign: TextAlign.center,

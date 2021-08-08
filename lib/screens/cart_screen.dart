@@ -16,12 +16,15 @@ class CartScreen extends StatelessWidget {
       body: Column(
         children: [
           Card(
-            margin: EdgeInsets.all(15),
+            margin: EdgeInsets.all(15.0),
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10.0),
               child: Row(
                 children: [
-                  Text('Total', style: TextStyle(fontSize: 20)),
+                  Text(
+                    'Total',
+                    style: TextStyle(fontSize: 20.0),
+                  ),
                   // SizedBox(
                   //   width: 10,
                   // ),
@@ -44,7 +47,7 @@ class CartScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
                 itemBuilder: (ctx, i) {
-                  var currentCartItem = cartItems.values.toList()[i]!;
+                  var currentCartItem = cartItems.values.toList()[i];
                   return ci.CartItem(
                     id: currentCartItem.id!,
                     title: currentCartItem.title!,
