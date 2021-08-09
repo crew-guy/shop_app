@@ -43,11 +43,11 @@ class ProductItem extends StatelessWidget {
             onTap: () => Navigator.of(context).pushNamed(
                 ProductDetailsScreen.routeName,
                 arguments: product.id),
-            // child: Image.network(product.imgUrl, fit: BoxFit.cover),
-            child: Container(
-              color:
-                  Colors.primaries[Random().nextInt(Colors.primaries.length)],
-            ),
+            child: Image.network(product.imgUrl, fit: BoxFit.cover),
+            // child: Container(
+            //   color:
+            //       Colors.primaries[Random().nextInt(Colors.primaries.length)],
+            // ),
           ),
           footer: GridTileBar(
             backgroundColor: Colors.black54,
