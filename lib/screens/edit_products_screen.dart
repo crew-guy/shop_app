@@ -60,9 +60,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Edit Product'), actions: [
         IconButton(
-          onPressed: () {
-            _saveForm();
-          },
+          onPressed: _saveForm,
           icon: Icon(Icons.save),
         )
       ]),
