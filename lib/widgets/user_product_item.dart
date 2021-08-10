@@ -14,7 +14,6 @@ class UserProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('${id} from user product item');
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(imgUrl),

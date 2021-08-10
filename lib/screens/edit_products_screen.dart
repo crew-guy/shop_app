@@ -24,6 +24,13 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
     id: '',
     description: "",
   );
+  bool _isInit = false;
+  Map<String, dynamic> _initValues = {
+    'title': '',
+    'price': 0,
+    'description': "",
+    'imgUrl': '',
+  };
 
   @override
   void initState() {
@@ -35,9 +42,26 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
 
   void _updateImgUrl() {
     if (!_imgUrlFocusNode.hasFocus) {
-      print(_imgUrlController.text);
       setState(() {});
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    final productId = ModalRoute.of(context)?.settings.arguments as String;
+    print(productId);
+    if (productId != null) {
+      _editedProduct = Provider.of<Products>(context).findById(productId);
+      _initValues = {
+        'title': _editedProduct.title,
+        'price': _editedProduct.price,
+        'description': _editedProduct.description,
+        'imgUrl': _editedProduct.imgUrl,
+      };
+    }
+    print(_initValues);
+    super.didChangeDependencies();
   }
 
   @override
@@ -63,8 +87,6 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final stuff = ModalRoute.of(context)!.settings.arguments;
-    print(stuff);
     return Scaffold(
       appBar: AppBar(title: Text('Edit Product'), actions: [
         IconButton(
@@ -78,6 +100,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
           key: _form,
           child: ListView(children: [
             TextFormField(
+              initialValue: _initValues['title'],
               decoration: InputDecoration(labelText: 'Title'),
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_) {
@@ -100,6 +123,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
               },
             ),
             TextFormField(
+                initialValue: _initValues['price'].toString(),
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -129,6 +153,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
                   return null;
                 }),
             TextFormField(
+                initialValue: _initValues['description'],
                 maxLines: 3,
                 focusNode: _descriptionFocusNode,
                 decoration: InputDecoration(labelText: 'Description'),
@@ -173,6 +198,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
               ),
               Expanded(
                 child: TextFormField(
+                    initialValue: _initValues['imgUrl'],
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.url,
                     decoration: InputDecoration(labelText: 'Image URL'),
