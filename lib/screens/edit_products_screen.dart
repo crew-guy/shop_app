@@ -15,11 +15,26 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
   final _imgUrlFocusNode = FocusNode();
 
   @override
+  void initState() {
+    _imgUrlFocusNode.addListener(_updateImgUrl);
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void _updateImgUrl() {
+    if (!_imgUrlFocusNode.hasFocus) {
+      print(_imgUrlController.text);
+      setState(() {});
+    }
+  }
+
+  @override
   void dispose() {
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
-    _imgUrlFocusNode.dispose();
     _imgUrlController.dispose();
+    _imgUrlFocusNode.removeListener(_updateImgUrl);
+    _imgUrlFocusNode.dispose();
     super.dispose();
   }
 
@@ -80,6 +95,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
                   keyboardType: TextInputType.url,
                   decoration: InputDecoration(labelText: 'Image URL'),
                   controller: _imgUrlController,
+                  focusNode: _imgUrlFocusNode,
                 ),
               )
             ])
