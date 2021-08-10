@@ -76,6 +76,7 @@ class ProductItem extends StatelessWidget {
                     duration: Duration(seconds: 2),
                     action: SnackBarAction(
                         label: 'UNDO',
+                        textColor: Colors.cyan[100],
                         onPressed: () {
                           cart.removeItem(product.id);
                         }),
