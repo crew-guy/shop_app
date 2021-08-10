@@ -69,4 +69,14 @@ class Products with ChangeNotifier {
     ));
     notifyListeners();
   }
+
+  void updateProduct(String productId, Product newProduct) {
+    final prodIndex = _items.indexWhere((prod) => prod.id == productId);
+    if (prodIndex != null) {
+      _items[prodIndex] = newProduct;
+      notifyListeners();
+    } else {
+      print('Product update failed :(');
+    }
+  }
 }

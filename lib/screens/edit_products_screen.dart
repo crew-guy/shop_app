@@ -30,6 +30,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
     'price': 0,
     'description': "",
     'imgUrl': '',
+    'id': null,
   };
 
   @override
@@ -85,7 +86,12 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
     }
     _form.currentState?.save();
     _form.currentState?.validate();
-    Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    if (_editedProduct.id != null) {
+      Provider.of<Products>(context, listen: false)
+          .updateProduct(_editedProduct.id, _editedProduct);
+    } else {
+      Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
+    }
     Navigator.of(context).pop();
   }
 
@@ -116,6 +122,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
                   price: _editedProduct.price,
                   imgUrl: _editedProduct.imgUrl,
                   id: _editedProduct.id,
+                  isFavourite: _editedProduct.isFavourite,
                   description: _editedProduct.description,
                 );
               },
@@ -141,6 +148,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
                     price: double.parse(value!),
                     imgUrl: _editedProduct.imgUrl,
                     id: _editedProduct.id,
+                    isFavourite: _editedProduct.isFavourite,
                     description: _editedProduct.description,
                   );
                 },
@@ -168,6 +176,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
                     price: _editedProduct.price,
                     imgUrl: _editedProduct.imgUrl,
                     id: _editedProduct.id,
+                    isFavourite: _editedProduct.isFavourite,
                     description: value!,
                   );
                 },
@@ -202,7 +211,6 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
               ),
               Expanded(
                 child: TextFormField(
-                    initialValue: _initValues['imgUrl'],
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.url,
                     decoration: InputDecoration(labelText: 'Image URL'),
@@ -217,6 +225,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
                         price: _editedProduct.price,
                         imgUrl: value!,
                         id: _editedProduct.id,
+                        isFavourite: _editedProduct.isFavourite,
                         description: _editedProduct.description,
                       );
                     },
