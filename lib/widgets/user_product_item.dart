@@ -4,14 +4,17 @@ import 'package:shop_app/screens/edit_products_screen.dart';
 class UserProductItem extends StatelessWidget {
   final String title;
   final String imgUrl;
+  final String id;
 
   UserProductItem({
     required this.title,
+    required this.id,
     required this.imgUrl,
   });
 
   @override
   Widget build(BuildContext context) {
+    print('${id} from user product item');
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(imgUrl),
@@ -24,7 +27,8 @@ class UserProductItem extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.edit),
               onPressed: () {
-                Navigator.of(context).pushNamed(EditProductsScreen.routeName);
+                Navigator.of(context)
+                    .pushNamed(EditProductsScreen.routeName, arguments: id);
               },
               color: Theme.of(context).accentColor,
             ),
