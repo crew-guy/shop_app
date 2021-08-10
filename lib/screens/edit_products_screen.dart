@@ -21,7 +21,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
     title: '',
     price: 0,
     imgUrl: "",
-    id: '',
+    id: "",
     description: "",
   );
   bool _isInit = false;
@@ -30,7 +30,6 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
     'price': 0,
     'description': "",
     'imgUrl': '',
-    'id': null,
   };
 
   @override
@@ -86,7 +85,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
     }
     _form.currentState?.save();
     _form.currentState?.validate();
-    if (_editedProduct.id != null) {
+    if (_editedProduct.id.length > 0) {
       Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
     } else {
