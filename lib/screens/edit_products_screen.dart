@@ -48,7 +48,12 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
   }
 
   void _saveForm() {
+    final _isValid = _form.currentState?.validate();
+    if (!_isValid!) {
+      return;
+    }
     _form.currentState?.save();
+    _form.currentState?.validate();
     print(_editedProduct.title);
     print(_editedProduct.price);
     print(_editedProduct.imgUrl);
@@ -83,6 +88,12 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
                   id: _editedProduct.id,
                   description: _editedProduct.description,
                 );
+              },
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "Please enter a value";
+                }
+                return null;
               },
             ),
             TextFormField(
