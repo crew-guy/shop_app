@@ -97,23 +97,34 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
               },
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Price'),
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.number,
-              focusNode: _priceFocusNode,
-              onFieldSubmitted: (_) {
-                FocusScope.of(context).requestFocus(_descriptionFocusNode);
-              },
-              onSaved: (value) {
-                _editedProduct = Product(
-                  title: _editedProduct.title,
-                  price: double.parse(value!),
-                  imgUrl: _editedProduct.imgUrl,
-                  id: _editedProduct.id,
-                  description: _editedProduct.description,
-                );
-              },
-            ),
+                decoration: InputDecoration(labelText: 'Price'),
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.number,
+                focusNode: _priceFocusNode,
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_descriptionFocusNode);
+                },
+                onSaved: (value) {
+                  _editedProduct = Product(
+                    title: _editedProduct.title,
+                    price: double.parse(value!),
+                    imgUrl: _editedProduct.imgUrl,
+                    id: _editedProduct.id,
+                    description: _editedProduct.description,
+                  );
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please enter a number";
+                  }
+                  if (double.tryParse(value) == null) {
+                    return "Please enter a valid number";
+                  }
+                  if (double.parse(value) <= 0) {
+                    return "Please enter a value greater than zero";
+                  }
+                  return null;
+                }),
             TextFormField(
               maxLines: 3,
               focusNode: _descriptionFocusNode,
