@@ -16,6 +16,10 @@ class _UserProductsScreenState extends State<UserProductsScreen> {
   bool _isLoading = false;
   bool _isInit = true;
 
+  Future<void> _refreshProducts(BuildContext context) async {
+    await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+  }
+
   @override
   void didChangeDependencies() {
     if (_isInit) {
@@ -50,16 +54,19 @@ class _UserProductsScreenState extends State<UserProductsScreen> {
       drawer: AppDrawer(),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: productsData.items.length,
-              itemBuilder: (_, i) {
-                final currentProduct = productsData.items[i];
-                return UserProductItem(
-                  id: currentProduct.id,
-                  title: currentProduct.title,
-                  imgUrl: currentProduct.imgUrl,
-                );
-              },
+          : RefreshIndicator(
+              onRefresh: () => _refreshProducts(context),
+              child: ListView.builder(
+                itemCount: productsData.items.length,
+                itemBuilder: (_, i) {
+                  final currentProduct = productsData.items[i];
+                  return UserProductItem(
+                    id: currentProduct.id,
+                    title: currentProduct.title,
+                    imgUrl: currentProduct.imgUrl,
+                  );
+                },
+              ),
             ),
     );
   }
