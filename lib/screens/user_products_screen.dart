@@ -14,18 +14,22 @@ class UserProductsScreen extends StatefulWidget {
 
 class _UserProductsScreenState extends State<UserProductsScreen> {
   bool _isLoading = false;
+  bool _isInit = true;
 
   @override
   void didChangeDependencies() {
-    setState(() {
-      _isLoading = true;
-    });
-    // TODO: implement didChangeDependencies
-    Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+    if (_isInit) {
       setState(() {
-        _isLoading = false;
+        _isLoading = true;
       });
-    });
+      // TODO: implement didChangeDependencies
+      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
     super.didChangeDependencies();
   }
 
