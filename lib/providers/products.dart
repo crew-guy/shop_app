@@ -86,6 +86,8 @@ class Products with ChangeNotifier {
         imgUrl: product.imgUrl,
       ));
       notifyListeners();
+    }).catchError((error) {
+      throw error;
     });
   }
 
