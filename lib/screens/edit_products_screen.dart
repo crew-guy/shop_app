@@ -20,18 +20,18 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
   bool _isLoading = false;
 
   Product _editedProduct = Product(
-    title: '',
-    price: 0,
-    imgUrl: "",
+    title: 'Product 1',
+    price: 10.99,
+    imgUrl: "https://www.vhv.rs/file/small/1/19698_black-box-outline-png.png",
     id: "",
-    description: "",
+    description: "We are talking about this revolutionary product",
   );
   bool _isInit = false;
   Map<String, dynamic> _initValues = {
-    'title': '',
-    'price': 0,
-    'description': "",
-    'imgUrl': '',
+    'title': 'Product 1',
+    'price': 10.99,
+    'description': "We are talking about this revolutionary product",
+    'imgUrl': 'https://www.vhv.rs/file/small/1/19698_black-box-outline-png.png',
   };
 
   @override
@@ -80,7 +80,7 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
     super.dispose();
   }
 
-  void _saveForm() {
+  void _saveForm() async {
     final _isValid = _form.currentState?.validate();
     if (!_isValid!) {
       return;
@@ -95,29 +95,31 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
           .updateProduct(_editedProduct.id, _editedProduct);
       Navigator.of(context).pop();
     } else {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editedProduct)
-          .catchError((error) {
-        return showDialog(
+      try {
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
+      } catch (error) {
+        print(error.toString());
+        await showDialog(
           context: context,
-          builder: (BuildContext _) => AlertDialog(
+          builder: (BuildContext ctx) => AlertDialog(
             title: Text('An error just occured !'),
-            content: Text(error.toString()),
+            content: Text(
+                'Your product was not added to the list due to an unexpected server side error'),
             actions: [
               TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Okay'))
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Okay'),
+              )
             ],
           ),
         );
-      }).then(
-        (_) {
-          _isLoading = false;
-          Navigator.of(context).pop();
-        },
-      );
+      } finally {
+        _isLoading = false;
+        Navigator.of(context).pop();
+      }
     }
   }
 
