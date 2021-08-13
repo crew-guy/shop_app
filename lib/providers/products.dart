@@ -140,8 +140,19 @@ class Products with ChangeNotifier {
     return Future.value();
   }
 
-  void deleteProduct(String id) {
+  Future<void> deleteProduct(String id) async {
     _items.removeWhere((prod) => prod.id == id);
+    var url = Uri.parse(
+        "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/products/${id}.json");
+    var existingProductIndex = _items.indexWhere((prod) => id == prod.id);
+    var existingProduct = _items[existingProductIndex];
+    await http.delete(url).then((_) {
+      existingProduct.dispose();
+    }).catchError((_) {
+      _items.insert(existingProductIndex, existingProduct);
+      notifyListeners();
+    });
+    _items.removeAt(existingProductIndex);
     notifyListeners();
   }
 }

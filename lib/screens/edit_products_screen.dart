@@ -120,7 +120,9 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
         // Navigator.of(context).pop();
       }
     }
-    _isLoading = false;
+    setState(() {
+      _isLoading = false;
+    });
     Navigator.of(context).pop();
   }
 
