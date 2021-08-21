@@ -20,23 +20,45 @@ class OrderItem {
 
 class Orders with ChangeNotifier {
   final List<OrderItem> _orders = [];
+  final String BASE_URL =
+      "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com";
 
   List<OrderItem> get orders {
     return [..._orders];
   }
 
-  Future<void> fetchAndSetOrders() {}
+  Future<void> fetchAndSetOrders() async {
+    final url = Uri.parse('${BASE_URL}/orders.json');
+    final loadedOrders = [];
+    try {
+      final response = await http.get(url);
+      print(response.body);
+    } catch (error) {
+      print(error);
+    }
+  }
 
   Future<void> addItem(List<CartItem> cartProducts, double amount) async {
     var url = Uri.parse(
         "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/orders.json");
     try {
-      final response = await http.post(url,
-          body: json.encode({
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
             'amount': amount,
-            'time': DateTime.now(),
+            'time': DateTime.now().toIso8601String(),
             'products': cartProducts
-          }));
+                .map((cartItem) => {
+                      'price': cartItem.price,
+                      'title': cartItem.title,
+                      'quantity': cartItem.quantity,
+                      'id': cartItem.id
+                    })
+                .toList()
+          },
+        ),
+      );
       _orders.insert(
         0,
         OrderItem(
