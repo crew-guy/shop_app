@@ -70,14 +70,16 @@ class Products with ChangeNotifier {
       Map<String, dynamic> productsFromDb = json.decode(response.body);
       final List<Product> loadedProducts = [];
       productsFromDb.forEach((prodId, prodData) {
-        loadedProducts.add(Product(
-          price: prodData['price'],
-          imgUrl: prodData['imgUrl'],
-          title: prodData['title'],
-          description: prodData['description'],
-          isFavourite: prodData['isFavourite'],
-          id: prodId,
-        ));
+        loadedProducts.add(
+          Product(
+            price: prodData['price'],
+            imgUrl: prodData['imgUrl'],
+            title: prodData['title'],
+            description: prodData['description'],
+            isFavourite: prodData['isFavourite'],
+            id: prodId,
+          ),
+        );
         _items = loadedProducts;
       });
     } catch (error) {
@@ -103,13 +105,15 @@ class Products with ChangeNotifier {
           },
         ),
       );
-      _items.add(Product(
-        id: json.decode(response.body)['name'],
-        title: product.title,
-        price: product.price,
-        description: product.description,
-        imgUrl: product.imgUrl,
-      ));
+      _items.add(
+        Product(
+          id: json.decode(response.body)['name'],
+          title: product.title,
+          price: product.price,
+          description: product.description,
+          imgUrl: product.imgUrl,
+        ),
+      );
       notifyListeners();
     } catch (error) {
       print(error);
@@ -142,10 +146,10 @@ class Products with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     _items.removeWhere((prod) => prod.id == id);
-    var url = Uri.parse(
+    final url = Uri.parse(
         "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/products/${id}.json");
-    var existingProductIndex = _items.indexWhere((prod) => id == prod.id);
-    var existingProduct = _items[existingProductIndex];
+    final existingProductIndex = _items.indexWhere((prod) => id == prod.id);
+    final existingProduct = _items[existingProductIndex];
     await http.delete(url).then((_) {
       existingProduct.dispose();
     }).catchError((_) {
