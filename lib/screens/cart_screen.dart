@@ -44,14 +44,17 @@ class CartScreen extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                      child: Text('ORDER NOW'),
-                      onPressed: () {
-                        Provider.of<Orders>(context, listen: false).addItem(
-                            cartItemsData.cartItems.values.toList(),
-                            cartItemsData.totalAmount);
-                        cartItems.clear();
-                        // Navigator.of(context).pushNamed(OrdersScreen.routeName);
-                      })
+                    child: Text('ORDER NOW'),
+                    onPressed: cartItemsData.totalAmount <= 0
+                        ? null
+                        : () {
+                            Provider.of<Orders>(context, listen: false).addItem(
+                                cartItemsData.cartItems.values.toList(),
+                                cartItemsData.totalAmount);
+                            cartItems.clear();
+                            // Navigator.of(context).pushNamed(OrdersScreen.routeName);
+                          },
+                  )
                 ],
               ),
             ),
