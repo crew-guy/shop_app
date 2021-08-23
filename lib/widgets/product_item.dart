@@ -19,6 +19,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context);
     return Container(
@@ -56,8 +57,19 @@ class ProductItem extends StatelessWidget {
                 icon: Icon(product.isFavourite
                     ? Icons.favorite
                     : Icons.favorite_outline),
-                onPressed: () {
-                  product.toggleFavouriteStatus();
+                onPressed: () async {
+                  try {
+                    await product.toggleFavouriteStatus();
+                  } catch (e) {
+                    scaffold.showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Failed to update favourite status',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    );
+                  }
                 },
                 color: Theme.of(context).accentColor,
               ),

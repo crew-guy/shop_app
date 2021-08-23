@@ -30,8 +30,8 @@ class Product with ChangeNotifier {
     var oldStatus = isFavourite;
     isFavourite = !isFavourite;
     try {
-      final response =
-          await http.patch(url, body: {'isFavourite': isFavourite});
+      final response = await http.patch(url,
+          body: json.encode({'isFavourite': isFavourite}));
       if (response.statusCode >= 400) {
         _setFavVal(oldStatus);
         notifyListeners();
@@ -39,7 +39,7 @@ class Product with ChangeNotifier {
       }
     } catch (error) {
       _setFavVal(oldStatus);
-      print(error);
+      throw HttpException(message: 'Favourite status could not be updated');
     }
     notifyListeners();
   }
