@@ -21,7 +21,7 @@ class OrderItem {
 }
 
 class Orders with ChangeNotifier {
-  final List<OrderItem> _orders = [];
+  List<OrderItem> _orders = [];
   final String BASE_URL =
       "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com";
 
@@ -31,7 +31,7 @@ class Orders with ChangeNotifier {
 
   Future<void> fetchAndSetOrders() async {
     final url = Uri.parse('${BASE_URL}/orders.json');
-    var loadedOrders = [];
+    List<OrderItem> loadedOrders = [];
     try {
       final response = await http.get(url);
       Map<String, dynamic> ordersFromDb = json.decode(response.body);
@@ -39,23 +39,22 @@ class Orders with ChangeNotifier {
         (ordId, ord) {
           loadedOrders.add(
             OrderItem(
-              id: ordId,
-              amount: ord['amount'],
-              time: DateTime.parse(ord['time']),
-              products: ord['products'].forEach(
-                (prodId, prod) => Product(
-                  id: prodId,
-                  title: prod['title'],
-                  imgUrl: prod['imgUrl'],
-                  description: prod['description'],
-                  price: prod['price'],
-                ),
-              ),
-            ),
+                id: ordId,
+                amount: ord['amount'],
+                time: DateTime.parse(ord['time']),
+                products: (ord['products'] as List<dynamic>)
+                    .map((item) => CartItem(
+                          id: item['id'],
+                          price: item['price'],
+                          quantity: item['quantity'],
+                          title: item['title'],
+                        ))
+                    .toList()),
           );
         },
       );
       print(loadedOrders);
+      _orders = loadedOrders;
     } catch (e) {
       print(e);
     }
