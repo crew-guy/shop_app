@@ -35,6 +35,9 @@ class Orders with ChangeNotifier {
     try {
       final response = await http.get(url);
       Map<String, dynamic> ordersFromDb = json.decode(response.body);
+      if (ordersFromDb == null) {
+        return;
+      }
       ordersFromDb.forEach(
         (ordId, ord) {
           loadedOrders.add(
@@ -55,6 +58,7 @@ class Orders with ChangeNotifier {
       );
       print(loadedOrders);
       _orders = loadedOrders;
+      notifyListeners();
     } catch (e) {
       print(e);
     }
