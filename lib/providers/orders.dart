@@ -36,25 +36,23 @@ class Orders with ChangeNotifier {
       final response = await http.get(url);
       Map<String, dynamic> ordersFromDb = json.decode(response.body);
       ordersFromDb.forEach(
-        (ordId, ord) => {
+        (ordId, ord) {
           loadedOrders.add(
             OrderItem(
               id: ordId,
               amount: ord['amount'],
               time: DateTime.parse(ord['time']),
-              products: ord['products']
-                  .forEach(
-                    (prodId, prod) => Product(
-                      id: prodId,
-                      title: prod['title'],
-                      imgUrl: prod['imgUrl'],
-                      description: prod['description'],
-                      price: prod['price'],
-                    ),
-                  )
-                  .toList(),
+              products: ord['products'].forEach(
+                (prodId, prod) => Product(
+                  id: prodId,
+                  title: prod['title'],
+                  imgUrl: prod['imgUrl'],
+                  description: prod['description'],
+                  price: prod['price'],
+                ),
+              ),
             ),
-          )
+          );
         },
       );
       print(loadedOrders);
