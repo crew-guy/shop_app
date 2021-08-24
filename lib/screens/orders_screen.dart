@@ -14,8 +14,8 @@ class OrdersScreen extends StatefulWidget {
 class _OrdersScreenState extends State<OrdersScreen> {
   Future? _ordersFuture;
 
-  Future _obtainOrdersFuture(){
-    return Provider.of<Orders>(context,listen:false).fetchAndSetOrders();
+  Future _obtainOrdersFuture() {
+    return Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
   }
 
   @override
@@ -27,38 +27,37 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     // final ordersData = Provider.of<Orders>(context);
     // ordersData.fetchAndSetOrders();
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Orders'),
-        ),
-        drawer: AppDrawer(),
-        body: FutureBuilder(
-            future: _ordersFuture,
-            builder: (ctx, dataSnapshot) {
-              if (dataSnapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (dataSnapshot.error != null) {
-                return Center(
-                    child: Text('Error occurred while loading orders'));
-              }
-              return Consumer<Orders>(
-                builder: (ctx,ordersData, child){
-                  return ListView.builder(
-                    itemCount:ordersData.orders.length,
-                    itemBuilder:(ctx,i){
-                      return OrderItem(ordersData.orders[i]);
-                    }
-                  );
-                },
-              );
-        // ? Center(child: CircularProgressIndicator())
-        // : ListView.builder(
-        //     itemCount: ordersData.orders.length,
-        //     itemBuilder: (ctx, i) => OrderItem(ordersData.orders[i]),
-        //   ),
-        );
+      appBar: AppBar(
+        title: Text('Orders'),
+      ),
+      drawer: AppDrawer(),
+      body: FutureBuilder(
+        future: _ordersFuture,
+        builder: (ctx, dataSnapshot) {
+          if (dataSnapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (dataSnapshot.error != null) {
+            return Center(child: Text('Error occurred while loading orders'));
+          }
+          return Consumer<Orders>(
+            builder: (ctx, ordersData, child) {
+              return ListView.builder(
+                  itemCount: ordersData.orders.length,
+                  itemBuilder: (ctx, i) {
+                    return OrderItem(ordersData.orders[i]);
+                  });
+            },
+          );
+          // ? Center(child: CircularProgressIndicator())
+          // : ListView.builder(
+          //     itemCount: ordersData.orders.length,
+          //     itemBuilder: (ctx, i) => OrderItem(ordersData.orders[i]),
+          //   ),
+        },
+      ),
+    );
   }
 }
