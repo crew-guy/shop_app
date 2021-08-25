@@ -20,9 +20,9 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
   bool _isLoading = false;
 
   Product _editedProduct = Product(
-    title: 'Product 1',
-    price: 10.99,
-    imgUrl: "https://www.vhv.rs/file/small/1/19698_black-box-outline-png.png",
+    title: '',
+    price: 0,
+    imgUrl: "",
     id: "",
     description: "We are talking about this revolutionary product",
   );
