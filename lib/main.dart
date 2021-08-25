@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Lato',
         ),
         home: AuthScreen(),
-        initialRoute: ProductsOverviewScreen.routeName,
+        initialRoute: AuthScreen.routeName,
         routes: {
           AuthScreen.routeName: (ctx) => AuthScreen(),
           ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
