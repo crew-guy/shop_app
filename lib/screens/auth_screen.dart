@@ -177,7 +177,18 @@ class _AuthCardState extends State<AuthCard> {
                             }
                           }
                         : null,
-                  )
+                  ),
+                SizedBox(height: 20),
+                if (_isLoading)
+                  CircularProgressIndicator()
+                else
+                  RaisedButton(
+                      child: Text(
+                          _authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),
+                      onPressed: _submit,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ))
               ],
             ),
           ),
