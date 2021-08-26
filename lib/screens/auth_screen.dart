@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/models/http_exception.dart';
 import 'package:shop_app/providers/auth.dart';
 
 enum AuthMode { Signup, Login }
@@ -105,14 +106,32 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-      await Provider.of<Auth>(context, listen: false)
-          .signin(_authData['email']!, _authData['password']!);
-    } else {
-      // Sign user up
-      await Provider.of<Auth>(context, listen: false)
-          .signup(_authData['email']!, _authData['password']!);
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        await Provider.of<Auth>(context, listen: false)
+            .signin(_authData['email']!, _authData['password']!);
+      } else {
+        // Sign user up
+        await Provider.of<Auth>(context, listen: false)
+            .signup(_authData['email']!, _authData['password']!);
+      }
+    } on HttpException catch (error) {
+      String errorMessage = "Failed to authenticate you.";
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = "A user with this email already exists";
+      } else if (errorMessage.toString().contains('INVALID_EMAIL')) {
+        errorMessage = "Entered email is invalid";
+      } else if (errorMessage.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = "Entered password is invalid";
+      } else if (errorMessage.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = "Entered password is weak";
+      } else if (errorMessage.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = "There is no user with this email";
+      }
+    } catch (error) {
+      const errorMessage = "Your authentication failed....";
+      throw error;
     }
     setState(() {
       _isLoading = false;

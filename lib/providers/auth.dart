@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
@@ -17,13 +19,20 @@ class Auth with ChangeNotifier {
   ) async {
     var url = Uri.parse(
         'https://identitytoolkit.googleapis.com/v1/accounts:${urlKey}?key=${WEB_API_KEY}');
-    final response = await http.post(
-      url,
-      body: json.encode(
-        {'email': email, 'password': password, 'returnSecureToken': true},
-      ),
-    );
-    print(json.decode(response.body));
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {'email': email, 'password': password, 'returnSecureToken': true},
+        ),
+      );
+      final responseData = json.decode(response.body);
+      if (responseData['error'] != null) {
+        throw HttpException(responseData['error']['message']);
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
   Future<void> signup(String email, String password) async {
