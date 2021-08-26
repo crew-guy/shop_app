@@ -97,6 +97,23 @@ class _AuthCardState extends State<AuthCard> {
   };
   final _passwordController = TextEditingController();
 
+  void _showErrorDialog(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Authentication error'),
+        content: Text(errorMessage),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Okay'))
+        ],
+      ),
+    );
+  }
+
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) {
       // Invalid
@@ -129,9 +146,10 @@ class _AuthCardState extends State<AuthCard> {
       } else if (errorMessage.toString().contains('EMAIL_NOT_FOUND')) {
         errorMessage = "There is no user with this email";
       }
+      _showErrorDialog(errorMessage);
     } catch (error) {
       const errorMessage = "Your authentication failed....";
-      throw error;
+      _showErrorDialog(errorMessage);
     }
     setState(() {
       _isLoading = false;
