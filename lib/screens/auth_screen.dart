@@ -126,15 +126,20 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false)
-            .signin(_authData['email']!, _authData['password']!);
+        await Provider.of<Auth>(context, listen: false).signin(
+          _authData['email']!,
+          _authData['password']!,
+        );
       } else {
         // Sign user up
-        await Provider.of<Auth>(context, listen: false)
-            .signup(_authData['email']!, _authData['password']!);
+        await Provider.of<Auth>(context, listen: false).signup(
+          _authData['email']!,
+          _authData['password']!,
+        );
       }
     } on HttpException catch (error) {
-      String errorMessage = "Failed to authenticate you.";
+      print('http ex err');
+      var errorMessage = "Failed to authenticate you.";
       if (error.toString().contains('EMAIL_EXISTS')) {
         errorMessage = "A user with this email already exists";
       } else if (errorMessage.toString().contains('INVALID_EMAIL')) {
@@ -145,10 +150,12 @@ class _AuthCardState extends State<AuthCard> {
         errorMessage = "Entered password is weak";
       } else if (errorMessage.toString().contains('EMAIL_NOT_FOUND')) {
         errorMessage = "There is no user with this email";
+      } else {
+        errorMessage = "eh";
       }
       _showErrorDialog(errorMessage);
     } catch (error) {
-      const errorMessage = "Your authentication failed....";
+      var errorMessage = "Your authentication failed....";
       _showErrorDialog(errorMessage);
     }
     setState(() {
