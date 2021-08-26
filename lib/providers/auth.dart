@@ -22,7 +22,7 @@ class Auth with ChangeNotifier {
     print(json.decode(response.body));
   }
 
-  Future<void> sigin(String email, String password) async {
+  Future<void> signin(String email, String password) async {
     final url = Uri.parse(
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${WEB_API_KEY}');
     final response = await http.post(
