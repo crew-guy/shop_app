@@ -19,8 +19,8 @@ class Auth with ChangeNotifier {
   dynamic get token {
     if (_expiryDate != null &&
         _expiryDate!.isAfter(DateTime.now()) &&
-        token != null) {
-      return token;
+        _token != null) {
+      return _token;
     }
     return null;
   }
