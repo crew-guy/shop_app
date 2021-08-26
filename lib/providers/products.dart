@@ -66,6 +66,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
+    print('i was called');
     var url = Uri.parse(
         "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/products.json?auth=$authToken");
     try {
