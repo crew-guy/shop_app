@@ -115,6 +115,14 @@ class _AuthCardState extends State<AuthCard>
         .animate(
       CurvedAnimation(parent: _controller!, curve: Curves.linear),
     );
+    _heightAnimation?.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller!.dispose();
   }
 
   void _showErrorDialog(String errorMessage) {
