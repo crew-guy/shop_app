@@ -5,39 +5,10 @@ import 'package:shop_app/models/http_exception.dart';
 import 'package:shop_app/providers/product.dart';
 
 class Products with ChangeNotifier {
-  // List<Product> _items = [
-  //   Product(
-  //     id: 'p1',
-  //     title: 'Red Shirt',
-  //     description: 'A red shirt - it is pretty red!',
-  //     price: 29.99,
-  //     imgUrl: 'https://unsplash.it/500',
-  //   ),
-  //   Product(
-  //     id: 'p2',
-  //     title: 'Trousers',
-  //     description: 'A nice pair of trousers.',
-  //     price: 59.99,
-  //     imgUrl: 'https://unsplash.it/501',
-  //   ),
-  //   Product(
-  //     id: 'p3',
-  //     title: 'Yellow Scarf',
-  //     description: 'Warm and cozy - exactly what you need for the winter.',
-  //     price: 19.99,
-  //     imgUrl: 'https://unsplash.it/502',
-  //   ),
-  //   Product(
-  //     id: 'p4',
-  //     title: 'A Pan',
-  //     description: 'Prepare any meal you want.',
-  //     price: 49.99,
-  //     imgUrl: 'https://unsplash.it/504',
-  //   ),
-  // ];
   List<Product> _items = [];
   var _showFavourites = false;
   final String? authToken;
+  final String? userId;
   List<Product> get items {
     // if (_showFavourites) {
     // return [...items.where((prod) => prod.isFavourite)];
@@ -45,7 +16,7 @@ class Products with ChangeNotifier {
     return [..._items];
   }
 
-  Products(this.authToken, this._items);
+  Products(this.authToken, this.userId, this._items);
 
   void showFavouritesOnly() {
     _showFavourites = true;
@@ -66,7 +37,6 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    print('i was called');
     var url = Uri.parse(
         "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/products.json?auth=$authToken");
     try {
@@ -108,7 +78,6 @@ class Products with ChangeNotifier {
             'description': product.description,
             'imgUrl': product.imgUrl,
             'price': product.price,
-            'isFavourite': product.isFavourite,
           },
         ),
       );
