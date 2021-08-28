@@ -47,10 +47,13 @@ class ProductItem extends StatelessWidget {
                 ProductDetailsScreen.routeName,
                 arguments: product.id),
             // child: Image.network(product.imgUrl, fit: BoxFit.cover),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/images/placeholder-img.png'),
-              image: NetworkImage(product.imgUrl),
-              fit: BoxFit.cover,
+            child: Hero(
+              tag: product.id,
+              child: FadeInImage(
+                placeholder: AssetImage('assets/images/placeholder-img.png'),
+                image: NetworkImage(product.imgUrl),
+                fit: BoxFit.cover,
+              ),
             ),
             // child: Container(
             //   color:
