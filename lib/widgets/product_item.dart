@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:shop_app/providers/auth.dart';
 import 'package:shop_app/providers/cart.dart';
 import 'package:shop_app/providers/product.dart';
 import 'package:shop_app/screens/product_details_screen.dart';
@@ -22,6 +23,7 @@ class ProductItem extends StatelessWidget {
     final scaffold = ScaffoldMessenger.of(context);
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context);
+    final authData = Provider.of<Auth>(context, listen: false);
     return Container(
       decoration: new BoxDecoration(
         boxShadow: [
@@ -59,7 +61,7 @@ class ProductItem extends StatelessWidget {
                     : Icons.favorite_outline),
                 onPressed: () async {
                   try {
-                    await product.toggleFavouriteStatus();
+                    await product.toggleFavouriteStatus(authData.token);
                   } catch (e) {
                     scaffold.showSnackBar(
                       SnackBar(
