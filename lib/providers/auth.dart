@@ -8,7 +8,7 @@ import 'dart:convert';
 const WEB_API_KEY = 'AIzaSyAhvn-Ig5Y9NoNnvBrqTm4RcpM590bxzkI';
 
 class Auth with ChangeNotifier {
-  String? _token;
+  var _token;
   DateTime? _expiryDate;
   String? _userId;
 
@@ -69,5 +69,12 @@ class Auth with ChangeNotifier {
 
   Future<void> signin(String email, String password) async {
     return _authenticate(email, password, 'signInWithPassword');
+  }
+
+  void logout() {
+    _token = null;
+    _expiryDate = null;
+    _userId = null;
+    notifyListeners();
   }
 }

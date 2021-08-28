@@ -6,6 +6,7 @@ import 'package:shop_app/widgets/app_drawer.dart';
 import 'package:shop_app/widgets/user_product_item.dart';
 
 class UserProductsScreen extends StatelessWidget {
+  static const String routeName = '/user-products';
   Future<void> _refreshProducts(context) async {
     await Provider.of<Products>(context, listen: false)
         .fetchAndSetProducts(true);
@@ -19,10 +20,11 @@ class UserProductsScreen extends StatelessWidget {
         title: const Text('Your Products'),
         actions: [
           IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.of(context).pushNamed(EditProductsScreen.routeName);
-              }),
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).pushNamed(EditProductsScreen.routeName);
+            },
+          ),
         ],
       ),
       drawer: AppDrawer(),

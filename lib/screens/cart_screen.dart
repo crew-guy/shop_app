@@ -101,7 +101,7 @@ class _OrderButtonState extends State<OrderButton> {
                 await Provider.of<Orders>(context, listen: false).addItem(
                     widget.cartItemsData.cartItems.values.toList(),
                     widget.cartItemsData.totalAmount);
-                widget.cartItems.clear();
+                widget.cartItemsData.clear();
                 Navigator.of(context).pushNamed(OrdersScreen.routeName);
               } catch (e) {
                 print(e);
