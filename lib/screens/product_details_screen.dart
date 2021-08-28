@@ -31,27 +31,28 @@ class ProductDetailsScreen extends StatelessWidget {
           ),
         ),
         SliverList(
-            delegate: SliverChildListDelegate([
-          Column(children: [
-            SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              width: double.infinity,
-              child: Text(
-                '\$${loadedProduct.price}',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20.0),
+          delegate: SliverChildListDelegate([
+            Column(children: [
+              SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                width: double.infinity,
+                child: Text(
+                  '\$${loadedProduct.price}',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20.0),
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              loadedProduct.description,
-              style: TextStyle(color: Theme.of(context).accentColor),
-              // softWrap: true,
-            ),
-            SizedBox(height: 1000),
+              SizedBox(height: 10),
+              Text(
+                loadedProduct.description,
+                style: TextStyle(color: Theme.of(context).accentColor),
+                // softWrap: true,
+              ),
+              SizedBox(height: 1000),
+            ]),
           ]),
-        ]))
+        )
       ]),
     );
   }

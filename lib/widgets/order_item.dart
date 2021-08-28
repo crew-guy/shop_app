@@ -17,7 +17,11 @@ class _OrderItemState extends State<OrderItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 300),
+      height: _expanded
+          ? min(widget.orderItem.products.length * 20.0 + 110, 200.0)
+          : 95,
       margin: const EdgeInsets.all(10),
       child: Column(
         children: [
@@ -38,34 +42,36 @@ class _OrderItemState extends State<OrderItem> {
               },
             ),
           ),
-          if (_expanded)
-            Container(
-              height: min(widget.orderItem.products.length * 20.0 + 10, 100.0),
-              child: ListView(
-                children: widget.orderItem.products
-                    .map(
-                      (prod) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0,
-                          vertical: 4.0,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              prod.title!,
-                              style: TextStyle(
-                                  color: Theme.of(context).accentColor,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text((prod.price! * prod.quantity!).toString())
-                          ],
-                        ),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            height: _expanded
+                ? min(widget.orderItem.products.length * 20.0 + 10, 100.0)
+                : 0,
+            child: ListView(
+              children: widget.orderItem.products
+                  .map(
+                    (prod) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0,
+                        vertical: 4.0,
                       ),
-                    )
-                    .toList(),
-              ),
-            )
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            prod.title!,
+                            style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text((prod.price! * prod.quantity!).toString())
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          )
         ],
       ),
     );
