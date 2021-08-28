@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
@@ -76,5 +76,10 @@ class Auth with ChangeNotifier {
     _expiryDate = null;
     _userId = null;
     notifyListeners();
+  }
+
+  void _autoLogout() {
+    final timeToExpiry = _expiryDate?.difference(DateTime.now()).inSeconds;
+    Timer(Duration(seconds: timeToExpiry!), logout);
   }
 }
