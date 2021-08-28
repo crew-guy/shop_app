@@ -36,20 +36,25 @@ class Products with ChangeNotifier {
     return _items.firstWhere((product) => product.id == productId);
   }
 
-  Future<void> fetchAndSetProducts() async {
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterByUserString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : "";
     var url = Uri.parse(
-        'https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/products.json?auth=$authToken&orderBy="creatorId"&equalTo="$userId"');
+        'https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterByUserString');
+
     try {
+      print('i was run');
       var response = await http.get(url);
       Map<String, dynamic> productsFromDb = json.decode(response.body);
       final List<Product> loadedProducts = [];
-      if (loadedProducts == null) {
+      if (productsFromDb == null) {
         return;
       }
       url = Uri.parse(
           "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/userFavourites/$userId.json?auth=$authToken");
       final favouriteResponse = await http.get(url);
       final favouriteResponseData = json.decode(favouriteResponse.body);
+      print(favouriteResponseData);
       productsFromDb.forEach((prodId, prodData) async {
         loadedProducts.add(
           Product(
@@ -57,9 +62,10 @@ class Products with ChangeNotifier {
             imgUrl: prodData['imgUrl'],
             title: prodData['title'],
             description: prodData['description'],
+            // isFavourite: true,
             isFavourite: favouriteResponseData == null
                 ? false
-                : favouriteResponseData[prodId]['isFavourite'] ?? false,
+                : favouriteResponseData[prodId] ?? false,
             id: prodId,
           ),
         );

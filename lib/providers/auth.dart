@@ -57,9 +57,6 @@ class Auth with ChangeNotifier {
           ),
         ),
       );
-      print(_token);
-      print(_userId);
-      print(_expiryDate!.toIso8601String());
       notifyListeners();
     } catch (error) {
       throw error;

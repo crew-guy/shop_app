@@ -66,7 +66,6 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
         _imgUrlController.text = _editedProduct.imgUrl;
       }
     }
-    print(_initValues);
     super.didChangeDependencies();
   }
 
@@ -98,7 +97,6 @@ class _EditProductsScreenState extends State<EditProductsScreen> {
         await Provider.of<Products>(context, listen: false)
             .addProduct(_editedProduct);
       } catch (error) {
-        print(error.toString());
         await showDialog(
           context: context,
           builder: (BuildContext ctx) => AlertDialog(

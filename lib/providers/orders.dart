@@ -62,12 +62,8 @@ class Orders with ChangeNotifier {
           );
         },
       );
-      print(loadedOrders);
-      _orders = loadedOrders;
       notifyListeners();
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   Future<void> addItem(List<CartItem> cartProducts, double amount) async {
@@ -102,8 +98,6 @@ class Orders with ChangeNotifier {
         ),
       );
       notifyListeners();
-    } catch (error) {
-      print(error);
-    }
+    } catch (error) {}
   }
 }

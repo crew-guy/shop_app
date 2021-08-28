@@ -17,7 +17,8 @@ class _UserProductsScreenState extends State<UserProductsScreen> {
   bool _isInit = true;
 
   Future<void> _refreshProducts(BuildContext context) async {
-    await Provider.of<Products>(context, listen: false).fetchAndSetProducts();
+    await Provider.of<Products>(context, listen: false)
+        .fetchAndSetProducts(true);
   }
 
   @override
@@ -27,7 +28,7 @@ class _UserProductsScreenState extends State<UserProductsScreen> {
         _isLoading = true;
       });
       // TODO: implement didChangeDependencies
-      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+      Provider.of<Products>(context).fetchAndSetProducts(true).then((_) {
         setState(() {
           _isLoading = false;
         });

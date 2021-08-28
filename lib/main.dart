@@ -50,8 +50,6 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) {
-          print('i was rerun');
-          print(auth.isAuth);
           return MaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData(
