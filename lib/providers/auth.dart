@@ -99,7 +99,7 @@ class Auth with ChangeNotifier {
     return true;
   }
 
-  void logout() {
+  void logout() async {
     _token = null;
     _expiryDate = null;
     _userId = null;
