@@ -8,7 +8,7 @@ import 'dart:convert';
 const WEB_API_KEY = 'AIzaSyAhvn-Ig5Y9NoNnvBrqTm4RcpM590bxzkI';
 
 class Auth with ChangeNotifier {
-  var _token;
+  String? _token;
   DateTime? _expiryDate;
   String? _userId;
 
@@ -16,8 +16,8 @@ class Auth with ChangeNotifier {
     return token != null;
   }
 
-  String get userId {
-    return _userId!;
+  String? get userId {
+    return _userId;
   }
 
   dynamic get token {
