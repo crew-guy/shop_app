@@ -5,42 +5,15 @@ import 'package:shop_app/screens/edit_products_screen.dart';
 import 'package:shop_app/widgets/app_drawer.dart';
 import 'package:shop_app/widgets/user_product_item.dart';
 
-class UserProductsScreen extends StatefulWidget {
-  static const String routeName = "/user-products";
-
-  @override
-  _UserProductsScreenState createState() => _UserProductsScreenState();
-}
-
-class _UserProductsScreenState extends State<UserProductsScreen> {
-  bool _isLoading = false;
-  bool _isInit = true;
-
-  Future<void> _refreshProducts(BuildContext context) async {
+class UserProductsScreen extends StatelessWidget {
+  Future<void> _refreshProducts(context) async {
     await Provider.of<Products>(context, listen: false)
         .fetchAndSetProducts(true);
   }
 
   @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      // TODO: implement didChangeDependencies
-      Provider.of<Products>(context).fetchAndSetProducts(true).then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-    _isInit = false;
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<Products>(context);
+    // final productsData = Provider.of<Products>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Products'),
@@ -53,22 +26,28 @@ class _UserProductsScreenState extends State<UserProductsScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: _isLoading
-          ? Center(child: CircularProgressIndicator())
-          : RefreshIndicator(
-              onRefresh: () => _refreshProducts(context),
-              child: ListView.builder(
-                itemCount: productsData.items.length,
-                itemBuilder: (_, i) {
-                  final currentProduct = productsData.items[i];
-                  return UserProductItem(
-                    id: currentProduct.id,
-                    title: currentProduct.title,
-                    imgUrl: currentProduct.imgUrl,
-                  );
-                },
-              ),
-            ),
+      body: FutureBuilder(
+        future: _refreshProducts(context),
+        builder: (ctx, dataSnapshot) =>
+            dataSnapshot.connectionState == ConnectionState.waiting
+                ? Center(child: CircularProgressIndicator())
+                : RefreshIndicator(
+                    onRefresh: () => _refreshProducts(context),
+                    child: Consumer<Products>(
+                      builder: (ctx, productsData, _) => ListView.builder(
+                        itemCount: productsData.items.length,
+                        itemBuilder: (_, i) {
+                          final currentProduct = productsData.items[i];
+                          return UserProductItem(
+                            id: currentProduct.id,
+                            title: currentProduct.title,
+                            imgUrl: currentProduct.imgUrl,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+      ),
     );
   }
 }
