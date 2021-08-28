@@ -46,14 +46,20 @@ class Products with ChangeNotifier {
       if (loadedProducts == null) {
         return;
       }
-      productsFromDb.forEach((prodId, prodData) {
+      url = Uri.parse(
+          "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/userFavourites/$userId.json?auth=$authToken");
+      final favouriteResponse = await http.get(url);
+      final favouriteResponseData = json.decode(favouriteResponse.body);
+      productsFromDb.forEach((prodId, prodData) async {
         loadedProducts.add(
           Product(
             price: prodData['price'],
             imgUrl: prodData['imgUrl'],
             title: prodData['title'],
             description: prodData['description'],
-            isFavourite: prodData['isFavourite'],
+            isFavourite: favouriteResponseData == null
+                ? false
+                : favouriteResponseData[prodId]['isFavourite'] ?? false,
             id: prodId,
           ),
         );
