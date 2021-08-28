@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const WEB_API_KEY = 'AIzaSyAhvn-Ig5Y9NoNnvBrqTm4RcpM590bxzkI';
 
@@ -60,6 +61,13 @@ class Auth with ChangeNotifier {
       );
       _autoLogout();
       notifyListeners();
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode({
+        'token': _token,
+        'userId': _userId,
+        'expiryDate': _expiryDate?.toIso8601String()
+      });
+      prefs.setString('userData', userData);
     } catch (error) {
       throw error;
     }
