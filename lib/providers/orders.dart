@@ -42,17 +42,20 @@ class Orders with ChangeNotifier {
         (ordId, ord) {
           loadedOrders.add(
             OrderItem(
-                id: ordId,
-                amount: ord['amount'],
-                time: DateTime.parse(ord['time']),
-                products: (ord['products'] as List<dynamic>)
-                    .map((item) => CartItem(
-                          id: item['id'],
-                          price: item['price'],
-                          quantity: item['quantity'],
-                          title: item['title'],
-                        ))
-                    .toList()),
+              id: ordId,
+              amount: ord['amount'],
+              time: DateTime.parse(ord['time']),
+              products: (ord['products'] as List<dynamic>)
+                  .map(
+                    (item) => CartItem(
+                      id: item['id'],
+                      price: item['price'],
+                      quantity: item['quantity'],
+                      title: item['title'],
+                    ),
+                  )
+                  .toList(),
+            ),
           );
         },
       );
