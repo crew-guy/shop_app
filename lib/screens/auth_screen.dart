@@ -211,16 +211,14 @@ class _AuthCardState extends State<AuthCard>
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       elevation: 8.0,
-      child: AnimatedBuilder(
-        animation: _heightAnimation!,
-        builder: (ctx, ch) => Container(
-            height: _heightAnimation!.value.height,
-            constraints: BoxConstraints(
-              minHeight: _heightAnimation!.value.height,
-            ),
-            width: deviceSize.width * 0.75,
-            padding: EdgeInsets.all(16.0),
-            child: ch),
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        height: _heightAnimation!.value.height,
+        constraints: BoxConstraints(
+          minHeight: _heightAnimation!.value.height,
+        ),
+        width: deviceSize.width * 0.75,
+        padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
