@@ -38,7 +38,7 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     var url = Uri.parse(
-        "https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/products.json?auth=$authToken");
+        'https://flutter-shop-app-79b4d-default-rtdb.firebaseio.com/products.json?auth=$authToken&orderBy="creatorId"&equalTo="$userId"');
     try {
       var response = await http.get(url);
       Map<String, dynamic> productsFromDb = json.decode(response.body);
@@ -84,6 +84,7 @@ class Products with ChangeNotifier {
             'description': product.description,
             'imgUrl': product.imgUrl,
             'price': product.price,
+            'creatorId': userId
           },
         ),
       );
